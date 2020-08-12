@@ -1,4 +1,9 @@
 package src;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 public class UberEatsMobileApp {
@@ -23,8 +28,28 @@ public class UberEatsMobileApp {
          * ....from CSV file
          */
 
+        // String path = "";
+        // String line = "";
+        // try{
+        //     BufferedReader br = new BufferedReader(new FileReader(path));
+        //     while((line = br.readLine()) != null ){
+        //         System.out.println(line);
+
+        //     } 
+
+        // } catch (FileNotFoundException e) {
+        //     e.printStackTrace();
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
+
+
+
+
         System.out.println("Select restaurant number (eg '1' for KFC)...\n");
         //takes user input
+
+        String number = sc.nextLine();
 
         
         System.out.println("Loading dishes from your selected restaurant...\n");
