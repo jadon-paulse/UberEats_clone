@@ -10,6 +10,7 @@ public class UberEatsMobileApp {
 
         System.out.println("Select location to load restaruants. Options are rondebosch, kenilworth, seapoint or all\n");
         //takes user input
+        System.out.println("Test");
 
         System.out.println("Loading restaurants in your area...\n");
         //load list of restaruants
