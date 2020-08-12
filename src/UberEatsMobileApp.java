@@ -1,4 +1,5 @@
 package src;
+import java.util.*;
 
 public class UberEatsMobileApp {
 
@@ -10,7 +11,8 @@ public class UberEatsMobileApp {
 
         System.out.println("Select location to load restaruants. Options are rondebosch, kenilworth, seapoint or all\n");
         //takes user input
-        System.out.println("Test");
+        Scanner sc = new Scanner(System.in);
+        String location = sc.nextLine();
 
         System.out.println("Loading restaurants in your area...\n");
         //load list of restaruants
@@ -64,5 +66,6 @@ public class UberEatsMobileApp {
          
         System.out.println("Order has been placed! Thank you for your time. Restaurant will process your order soon!\n");
 
+        sc.close();
     }
 }
