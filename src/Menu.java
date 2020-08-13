@@ -1,18 +1,21 @@
-public class Menu{
-    private String Restaurant;
-    private String signatureDish;
-    private double Cost;
-    private String Location;
+package src;
 
-    public Menu(String Restaurant,String signatureDish,double cost,String location){
-        this.Restaurant = Restaurant;
+public class Menu {
+    private String restaurant;
+    private String signatureDish;
+    private int cost;
+    private String location;
+
+    public Menu(String restaurant, String signatureDish, int cost, String location){
+        this.restaurant = restaurant;
         this.signatureDish = signatureDish;
-        this.Cost = cost;
-        this.Location = location;
+        this.cost = cost;
+        this.location = location;
     }
+    
 
     public void setRestaurant(){
-        this.Restaurant= Restaurant;
+        this.restaurant = restaurant;
     }
 
     public void setsignatureDish(){
@@ -20,25 +23,26 @@ public class Menu{
     }
 
     public void setcost(){
-        this.Cost = Cost;
+        this.cost = cost;
     }
     public void setlocattion(){
-        this.Location = Location;
+        this.location = location;
     }
 
     public String getRestaurant(){
-        return Restaurant;
+        return this.restaurant;
     }
 
     public String getsignatureDish(){
-        return signatureDish;
+        return this.signatureDish;
     }
 
-    public double getcost(){
-        return Cost;
+    public int getcost(){
+        return this.cost;
     }
 
     public String getlocation(){
-        return Location;
+        return this.location;
     }
+
 }
