@@ -102,7 +102,7 @@ public class Database{
 
     public static Menu[] CSVreader() {
 
-        String csvFile = "./bin/restos.csv";
+        String csvFile = ".\\bin\\restos.csv";
         Menu[] Arrayinfo = new Menu[211];
         String line = "";
         String cvsSplitby = ",";
@@ -113,7 +113,7 @@ public class Database{
             String[] data = line.split(cvsSplitby);
 
              if (i > -1) {
-                 Arrayinfo[i] = new Menu(data[0], data[1], Integer.parseInt(data[2]), data[3]);
+                 Arrayinfo[i] = new Menu(data[0].trim(), data[1], Integer.parseInt(data[2]), data[3]);
                 //  System.out.println(i);
                 
             }
