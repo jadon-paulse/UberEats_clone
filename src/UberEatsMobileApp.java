@@ -41,7 +41,7 @@ public class UberEatsMobileApp {
                 // if (location.toLowerCase().equals("rondebosch")){
                 //     System.out.println("1" + resNames[0]);
                 // }
-                System.out.println("1 " + resNames;
+                System.out.println("1 " + resNames);
 
             } 
 
