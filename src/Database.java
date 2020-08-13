@@ -17,6 +17,7 @@ public class Database{
         
         String csvFile = "../bin/restos.csv";
         Menu[] Arrayinfo = new Menu[9];
+        PlacedOrder[] Arrayorder = new PlacedOrder[200];
         String line = "";
         String cvsSplitby = ",";
         int i = -1;
@@ -27,6 +28,20 @@ public class Database{
 
              if (i > -1) {
                  Arrayinfo[i] = new Menu(data[0].trim(), data[1].trim(), Integer.parseInt(data[2].trim()), data[7].trim());
+                                
+            }
+            i++;
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    try (BufferedReader br = new BufferedReader(new FileReader("../bin/orders"))) {
+        while ((line = br.readLine()) != null) {
+            String[] data = line.split(cvsSplitby);
+
+             if (i > -1) {
+                 Arrayinfo[i] = new PlacedOrders(cvsSplitby, cvsSplitby, cvsSplitby);
                                 
             }
             i++;
@@ -54,6 +69,32 @@ public class Database{
             System.out.println("Error: " + e.toString());
         }
 
+    }
+
+    public static PlacedOrders[] CSVOrderReader(){
+
+        String csvFile = "../bin/order.csv";
+        // Menu[] Arrayinfo = new Menu[9];
+        PlacedOrders[] Arrayorder = new PlacedOrders[200];
+        String line = "";
+        String cvsSplitby = ",";
+        int i = -1;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(cvsSplitby);
+    
+                 if (i > -1) {
+                    Arrayorder[i] = new PlacedOrders(data[0], data[1], data[2]);
+                                    
+                }
+                i++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    
+        return Arrayorder;
     }
 
     public void closeFileWriting() {
