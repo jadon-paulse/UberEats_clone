@@ -17,7 +17,6 @@ public class Database{
         
         String csvFile = "../bin/restos.csv";
         Menu[] Arrayinfo = new Menu[9];
-        PlacedOrder[] Arrayorder = new PlacedOrder[200];
         String line = "";
         String cvsSplitby = ",";
         int i = -1;
@@ -35,21 +34,6 @@ public class Database{
     } catch (IOException e) {
         e.printStackTrace();
     }
-
-    try (BufferedReader br = new BufferedReader(new FileReader("../bin/orders"))) {
-        while ((line = br.readLine()) != null) {
-            String[] data = line.split(cvsSplitby);
-
-             if (i > -1) {
-                 Arrayinfo[i] = new PlacedOrders(cvsSplitby, cvsSplitby, cvsSplitby);
-                                
-            }
-            i++;
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-
     return Arrayinfo;
     }
 
