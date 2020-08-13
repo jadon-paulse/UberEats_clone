@@ -1,5 +1,4 @@
 package src;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -29,14 +28,13 @@ public class UberEatsMobileApp {
          */
 
 
-        String path = "C:\\Users\\Yusuf Hendricks\\Desktop\\UberEats_clone\\bin\\restos.csv";
+        String path = ".\\bin\\restos.csv";
         String line = "";
         try{
             BufferedReader br = new BufferedReader(new FileReader(path));
             while((line = br.readLine()) != null ){
-                // System.out.println(line);
-                // String[] resNames = line.split(",");
-                List<String[]> resNames = new ArrayList<>();
+                System.out.println(line);
+                String[] resNames = line.split(",");
                 
                 // if (location.toLowerCase().equals("rondebosch")){
                 //     System.out.println("1" + resNames[0]);
@@ -67,6 +65,7 @@ public class UberEatsMobileApp {
          * 3. signaturedish3 worth R400
          * ....from CSV file
          */
+       
 
         System.out.println("Your cart is currently empty\n");
         System.out.println("Press 'a dishNumber' to add, and dishnumber is index+1 from the arraylist that its being printed from...\n");
