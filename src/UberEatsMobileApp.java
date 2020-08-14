@@ -34,8 +34,6 @@ public class UberEatsMobileApp {
         }
 
 
-
-
         System.out.println("Select restaurant number (eg '1' for KFC)...\n");
         //takes user input
 
