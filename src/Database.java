@@ -1,105 +1,131 @@
-// package src;
 
 import java.io.BufferedReader;
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
-public class Database{
+public class Database {
+    private String ordersFilepath = "orders.csv";
 
-  
-    FileWriter csvWriter;
+    private PlacedOrders[] orders;
 
-    public static Menu[] CSVreader() {
-        
-        String csvFile = "../bin/restos.csv";
-        Menu[] Arrayinfo = new Menu[9];
-        String line = "";
-        String cvsSplitby = ",";
-        int i = -1;
+    private Restaurant[] restaurants;
 
-    try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-        while ((line = br.readLine()) != null) {
-            String[] data = line.split(cvsSplitby);
 
-             if (i > -1) {
-                 Arrayinfo[i] = new Menu(data[0].trim(), data[1].trim(), Integer.parseInt(data[2].trim()), data[7].trim());
-                                
-            }
-            i++;
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    return Arrayinfo;
-    }
+    private int rondRes;
+    private int seaRes;
+    private int KenRes;
 
-    public void WritetoCSV(Menu menu){
-        // Person p = menu.getPerson();
-        List<List<String>> rows = Arrays.asList(
-                Arrays.asList(menu.getRestaurant(), menu.getsignatureDish(), menu.getlocation())
-        );
+    public int countLinesInFile(String filepath) {
+        int amountOfLines = 0;
 
         try {
-            for (List<String> rowData : rows) {
-                this.csvWriter.append(String.join(",", rowData));
-                this.csvWriter.append("\n");
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(filepath));
+            String fileLine = null;
+
+            while ((fileLine = bufferedReader.readLine()) != null) {
+                amountOfLines++;
             }
+
+            bufferedReader.close();
         }
-        catch(Exception e) {
-            System.out.println("Error: " + e.toString());
-        }
 
-    }
-
-    public static PlacedOrders[] CSVOrderReader(){
-
-        String csvFile = "../bin/order.csv";
-        // Menu[] Arrayinfo = new Menu[9];
-        PlacedOrders[] Arrayorder = new PlacedOrders[200];
-        String line = "";
-        String cvsSplitby = ",";
-        int i = -1;
-
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-            while ((line = br.readLine()) != null) {
-                String[] data = line.split(cvsSplitby);
-    
-                 if (i > -1) {
-                    Arrayorder[i] = new PlacedOrders(data[0], data[1], data[2]);
-                                    
-                }
-                i++;
-            }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    
-        return Arrayorder;
+
+        return amountOfLines;
     }
 
-    public void closeFileWriting() {
+    public Restaurant[] getAllRestaurants() {
+        String restaurantsFilepath = "restos.csv";
+
         try {
-            this.csvWriter.flush();
-            this.csvWriter.close();
-        }
-        catch(Exception e) {
-            System.out.println("Error: " + e.toString());
-        }
+
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(restaurantsFilepath));
+
+            String fileLine = null;
+            int i = 0;
+
+            this.restaurants = new Restaurant[countLinesInFile(restaurantsFilepath) - 1];
+
+            while ((fileLine = bufferedReader.readLine()) != null) {
 
 
+                if (i > 0) {
+
+                    String[] data = fileLine.split(",");
+
+
+                    Restaurant restaurant = new Restaurant(data[0].trim(), data[1].trim(), data[3].trim(), data[5].trim(), Integer.parseInt(data[2].trim()), Integer.parseInt(data[4].trim()), Integer.parseInt(data[6].trim()), data[7].trim());
+
+
+                    restaurants[i - 1] = restaurant;
+
+
+                    if(data[7].trim().toLowerCase().equals("rondebosch")) {
+                        this.rondRes++;
+                    }
+                    if(data[7].trim().toLowerCase().equals("seapoint")) {
+                        this.seaRes++;
+                    }
+                    if(data[7].trim().toLowerCase().equals("kennilworth")) {
+                        this.KenRes++;
+                    }
+                }
+                i++;
+            }
+
+        } catch (FileNotFoundException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
+        return restaurants;
     }
-    public static void main(String [] args){
-        Menu [] M = CSVreader();
-        for (int x = 0;x< M.length;x++){
-            System.out.println(M[x]);
-            if (x == 10){
-                break;
+
+    public Restaurant[] getRestaurantsByLocation(String location) {
+        Restaurant[] rondArea = new Restaurant[rondRes];;
+        Restaurant[] seaArea  = new Restaurant[seaRes];;
+        Restaurant[] kenArea = new Restaurant[KenRes];;
+
+        int kenCount = 0;
+        int seaCount = 0;
+        int rondCount = 0;
+
+        for (int i = 0; i < this.restaurants.length; i++) {
+
+
+            if(this.restaurants[i].getLocation().toLowerCase().equals("rondebosch")) {
+                rondArea[rondCount] = restaurants[i];
+                rondCount++;
+            } else if (this.restaurants[i].getLocation().toLowerCase().equals("kennilworth")) {
+                kenArea[kenCount] = restaurants[i];
+                kenCount++;
+            } else if (this.restaurants[i].getLocation().toLowerCase().equals("seapoint")) {
+                seaArea[seaCount] = restaurants[i];
+                seaCount++;
             }
         }
+
+        if(location.toLowerCase().equals("rondebosch")) { return rondArea; }
+
+        if(location.toLowerCase().equals("seapoint")) { return seaArea; }
+
+        return kenArea;
+    }
+
+
+
+
+    public Restaurant[] getRestaurants() {
+        return restaurants;
+    }
+
+    public PlacedOrders[] getOrders() {
+        return orders;
     }
 }
-

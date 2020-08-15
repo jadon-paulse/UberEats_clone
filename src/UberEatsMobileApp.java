@@ -1,101 +1,97 @@
-package src;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.*;
+
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Scanner;
 
 public class UberEatsMobileApp {
 
-    /**
-     * This is the main function that runs when I run the file after compiling.
-     */
     public static void main(String[] args) {
-        System.out.println("Welcome to UberEatsApp - signature dish edition\n");
+        boolean readyToSaveOrder = false;
 
-        System.out.println("Select location to load restaruants. Options are rondebosch, kenilworth, seapoint or all\n");
-        //takes user input
-        Scanner sc = new Scanner(System.in);
-        String location = sc.nextLine();
+        Restaurant restaurantClass = new Restaurant();
+        Scanner scanner = new Scanner(System.in);
+        Database db = new Database();
 
+        Restaurant[] allRestaurants = db.getAllRestaurants();
+        
+
+        System.out.println("Welcome to Uber Eats - Signature Dish Edition \n");
+        System.out.println("Select a location to load a restaurant from. Options are Rondebosch, Seapoint, Kenilworth or all.");
+
+//        TAKE THE USER INPUT
+        String location = scanner.nextLine();
         System.out.println("Loading restaurants in your area...\n");
-        //load list of restaruants
-        /**
-         * 1. KFC
-         * 2. McDonalds
-         * 3. Burger King
-         * ....from CSV file
-         */
 
+        Restaurant[] restaurantsAtLocation = db.getRestaurantsByLocation(location);
 
-        String path = ".\\bin\\restos.csv";
-        String line = "";
-        try{
-            BufferedReader br = new BufferedReader(new FileReader(path));
-            while((line = br.readLine()) != null ){
-                System.out.println(line);
-                String[] resNames = line.split(",");
-                
-                // if (location.toLowerCase().equals("rondebosch")){
-                //     System.out.println("1" + resNames[0]);
-                // }
-                System.out.println("1 " + resNames);
-
-            } 
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+//        LOAD LIST OF RESTAURANTS
+        for (int i = 0; i < restaurantsAtLocation.length; i++) {
+            System.out.println(i + 1 + ". " + restaurantsAtLocation[i].getName());
         }
 
+        System.out.println("Select a restaurant number (eg. '1' for KFC....)\n");
 
-        System.out.println("Select restaurant number (eg '1' for KFC)...\n");
-        //takes user input
+//        TAKE THE USER INPUT
+        int restaurantNumber = scanner.nextInt();
 
-        String number = sc.nextLine();
-
-        
         System.out.println("Loading dishes from your selected restaurant...\n");
-        //can add as many dishes until user types c to checkout to payment
-        //load dishes of restaruant
-        /**
-         * 1. signaturedish1 worth R400
-         * 2. signaturedish2 worth R400
-         * 3. signaturedish3 worth R400
-         * ....from CSV file
-         */
-       
+        Restaurant chosenRestaurant = restaurantsAtLocation[restaurantNumber - 1];
 
-        System.out.println("Your cart is currently empty\n");
-        System.out.println("Press 'a dishNumber' to add, and dishnumber is index+1 from the arraylist that its being printed from...\n");
+//        PRINT ALL THE DISHES UNTIL USER TYPES 'C' FOR CHECKOUT
+        System.out.println("1. " + chosenRestaurant.getSignatureDish1() + " worth " + chosenRestaurant.getCost1());
+        System.out.println("2. " + chosenRestaurant.getSignatureDish2() + " worth " + chosenRestaurant.getCost2());
+        System.out.println("3. " + chosenRestaurant.getSignatureDish3() + " worth " + chosenRestaurant.getCost3() + "\n");
 
-         //add items to cart    //suggestion: user arraylist to store cart items 
-         //when item is added to cart, cart is displayed as an arraylist showing items added to cart
+        System.out.println("Your cart is currently empty.");
 
-         System.out.println("Press 'd index' to delete item from cart...\n");
-         //user can click on d+(index) to delete a dish from the cart
-         //when item is deleted from cart, cart is displayed as an arraylist showing items in the cart
-        
-        
+        ArrayList<PlacedOrders> orders = new ArrayList<PlacedOrders>();
 
-        System.out.println("Please confirm your order by pressing y for yes\n");
-        //when y is pressed, Order gets added to CSV
-        //load items from cart
-        /**
-         * 1. signaturedish1
-         * 2. signaturedish1
-         * 3. signaturedish1
-         * 4. signaturedish2
-         * 5. signaturedish1
-         * 6. signaturedish3
-         */
+        while(readyToSaveOrder == false) {
+            System.out.println("Type 'a dish number' to add, and dish number is index + 1 from the array list that is being printed out ");
+            int dishNumber = scanner.nextInt();
+            int dishCost = 0;
+            String dish = "";
 
-        System.out.println("Cost of Order: R" + "");
+//        SAVE THE ORDER
+            if(dishNumber == 1) {
+                dish = chosenRestaurant.getSignatureDish1();
+                dishCost = chosenRestaurant.getCost1();
+            }
 
-         
-        System.out.println("Order has been placed! Thank you for your time. Restaurant will process your order soon!\n");
+            if(dishNumber == 2) {
+                dish = chosenRestaurant.getSignatureDish2();
+                dishCost = chosenRestaurant.getCost2();
+            }
 
-        sc.close();
+            if(dishNumber == 3) {
+                dish = chosenRestaurant.getSignatureDish3();
+                dishCost = chosenRestaurant.getCost3();
+            }
+
+//            ON EACH ITERATION, ADD EACH order TO THE orders ARRAYLIST
+            PlacedOrders order = new PlacedOrders(dish, chosenRestaurant.getLocation(), chosenRestaurant, dishCost);
+            orders.add(order);
+
+//            ON EACH ITERATION, SHOW THE CART
+            int i = 1;
+            Iterator iterator = orders.iterator();
+            while(iterator.hasNext()) {
+                PlacedOrders currentOrder = (PlacedOrders) iterator.next();
+                System.out.println(i + ". " + currentOrder.getOrder());
+                i++;
+            }
+
+//        WHEN 'Y' IS PRESSED, ORDERS GET ADDED TO CSV FILE
+            System.out.println("Please confirm your order by typing 'y' for yes");
+            String userInput = scanner.nextLine();
+
+            if(userInput.equals(String.valueOf('y'))) {
+                readyToSaveOrder = true;
+            }
+        }
+
+//         PLACE THE ORDER AND WRITE TO CSV FILE
+        restaurantClass.placeOrder(orders);
     }
 }
