@@ -87,6 +87,7 @@ public class Database {
         return restaurants;
     }
 
+
     public Restaurant[] getRestaurantsByLocation(String location) {
         Restaurant[] rondArea = new Restaurant[rondRes];;
         Restaurant[] seaArea  = new Restaurant[seaRes];;

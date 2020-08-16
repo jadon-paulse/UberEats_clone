@@ -83,10 +83,10 @@ public class UberEatsMobileApp {
             }
 
 //        WHEN 'Y' IS PRESSED, ORDERS GET ADDED TO CSV FILE
-            System.out.println("Please confirm your order by typing 'y' for yes");
-            String userInput = scanner.nextLine();
+            System.out.println("Please confirm your order by typing '5' for yes or any other number too continue");
+            int userInput = scanner.nextInt();
 
-            if(userInput.equals(String.valueOf('y'))) {
+            if(userInput == 5) {
                 readyToSaveOrder = true;
             }
         }

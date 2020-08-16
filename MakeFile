@@ -22,7 +22,7 @@ vpath %.class $(BINDIR)
 .java.class:
 	$(JAVAC) $(JFLAGS) $<
 
-classes: Menu.class Database.class UberEatsMobileApp.class  
+classes: Menu.class Database.class UberEatsMobileApp.class UberEatsRestaurantApp.class Restaurant.class PlacedOrders.class
 #  Passenger.class \
 		# UberApp.class Ride.class UberRide.class Database.class
 
@@ -31,7 +31,7 @@ default: $(CLASSES)
 doc:
 	javadoc -d $(DOCDIR) -cp $(DOCDIR) $(SRCDIR)/*.java
 
-test_classes: Menu.class Database.class UberEatsMobileApp.class 
+test_classes: Menu.class Database.class UberEatsMobileApp.class UberEatsRestaurantApp.class Restaurant.class PlacedOrders.class
 			# UberApp.class Ride.class UberRide.class Database.class
 
 
@@ -43,9 +43,14 @@ UberEatsMobileApp.class: UberEatsMobileApp.java
 	javac -d $(BINDIR) -cp $(JUNIT)
 Database.class: Database.java
 	javac -d $(BINDIR) -cp $(JUNIT)
+UberEatsRestaurantApp.class: UberEatsRestaurantApp.java
+	javac -d $(BINDIR) -cp $(JUNIT)
+Restaurant.class: Restaurant.java
+	javac -d $(BINDIR) -cp $(JUNIT)
+PlacedOrders.class: PlacedOrders.java
+	javac -d $(BINDIR) -cp $(JUNIT)
 
-# Vehicle.class: Vehicle.java
-# 	javac -d $(BINDIR) -cp $(JUNIT)
+	
 # Passenger.class: Passenger.java
 # 	javac -d $(BINDIR) -cp $(JUNIT)
 # UberApp.class: UberApp.java

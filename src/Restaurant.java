@@ -96,16 +96,15 @@ public class Restaurant {
 
     @Override
     public String toString() {
-        return "Restaurant{" +
-                "name='" + name + '\'' +
-                ", location='" + location + '\'' +
-                ", signatureDish1='" + signatureDish1 + '\'' +
-                ", signatureDish2='" + signatureDish2 + '\'' +
-                ", signatureDish3='" + signatureDish3 + '\'' +
-                ", cost1=" + cost1 +
-                ", cost2=" + cost2 +
-                ", cost3=" + cost3 +
-                '}';
+        return "" +
+                "" + name + ',' +
+                "" + location + ',' +
+                "" + signatureDish1 + ',' +
+                "" + signatureDish2 + ',' +
+                "" + signatureDish3 + ',' +
+                cost1 + ','
+                + cost2 + ','
+                + cost3;
     }
 
     public void placeOrder(ArrayList<PlacedOrders> orders) {
